@@ -52,12 +52,16 @@
     <script>
         document.addEventListener("DOMContentLoaded", function () {
             var poster = document.querySelector('.Poster');
-            if (poster.complete) {
+            function showPage() {
                 document.body.style.visibility = 'visible';
+            }
+            if (poster.complete) {
+                showPage();
             } else {
-                poster.addEventListener('load', function () {
-                    document.body.style.visibility = 'visible';
-                });
+                poster.addEventListener('load', showPage);
+                poster.addEventListener('error', showPage);
+                // Fallback: show page after 3 seconds even if image hangs
+                setTimeout(showPage, 3000);
             }
         });
     </script>
@@ -68,8 +72,9 @@
     <h1>Round Table 195 Zwartkops Golf Day</h1>
 
     <!-- Poster Image -->
-    <img src="GolfDay_2025_Poster.png" alt="Golf Day Poster"
-        style="max-width: 650px; width: 90%; height: auto; margin-bottom: 30px;" class="Poster">
+<img src="GolfDay_2025_Poster.png" alt="Golf Day Poster"
+    style="max-width: 350px; width: 90%; height: auto; margin-bottom: 30px;" class="Poster"
+    onerror="document.body.style.visibility='visible';">
     
     <p>Join us for a day of golf, fun, and camaraderie!</p>
     <p>Date: 7th November 2025</p>
